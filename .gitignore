@@ -1,0 +1,26 @@
+# Byte-compiled / optimized / DLL files
+*.py[cod]
+*$py.class
+_ext
+*.so
+**__pycache__**
+**build**
+**egg-info**
+**dist**
+
+# Editor
+.vscode/
+
+# cluster hostfiles
+hostfiles/
+
+# pytorch/python/numpy formats
+*.pth
+*.pkl
+*.npy
+
+# ipython/jupyter notebooks
+*.ipynb
+**/.ipynb_checkpoints/
+
+version.py

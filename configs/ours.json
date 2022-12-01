@@ -1,0 +1,39 @@
+{
+    "initial_config": "random",
+    "uncertainty_calculator": {
+        "type": "dd3d.active_learning.uncertainty_calculators.deep_ensembles.DeepEnsembles",
+        "number_of_models": 5,
+        "clustering_strategy": {
+            "type": "active_learning.clustering_strategies.angular_iou_clusterer.AngularIoUClusterer"
+        },
+        "uncertainty_functions": [
+            {
+                "type": "dd3d.active_learning.uncertainty_calculators.uncertainty_functions.localization_bias.LocalizationBias"
+            },
+            {
+                "type": "dd3d.active_learning.uncertainty_calculators.uncertainty_functions.total_variance.TotalVariance"
+            },
+            {
+                "type": "dd3d.active_learning.uncertainty_calculators.uncertainty_functions.lidar_aleatoric.LidarAleatoric"
+            }
+        ],
+        "combination_logic": {
+            "type": "dd3d.active_learning.uncertainty_calculators.combination_logics.combination_logic.CombinationLogic",
+            "fn_definitions": {
+                "sum": {
+                    "type": "dd3d.active_learning.uncertainty_calculators.combination_logics.arithmetic.Sum"
+                },
+                "mult": {
+                    "type": "dd3d.active_learning.uncertainty_calculators.combination_logics.arithmetic.Multiply"
+                }
+            },
+            "logic_string": "mult(sum($0,$1),$2)"
+        }
+    },
+    "lidar_base_yaml": "base_aleatoric.yaml",
+    "dd3d_base_yaml": "base.yaml",
+    "dd3d_base_prediction_yaml": "base_prediction.yaml",
+    "pl_uncertainty_calculator": {
+        "type": "combined.pl_uncertainty_calculators.lidar_aleatoric_uncertainty.LidarAleatoricUncertainty"
+    }
+}

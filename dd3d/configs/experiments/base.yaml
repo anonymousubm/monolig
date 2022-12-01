@@ -1,0 +1,70 @@
+# @package _global_
+DATALOADER:
+  TRAIN:
+    NUM_WORKERS: 12
+    REPEAT_THRESHOLD: 0.4
+    SAMPLER: RepeatFactorTrainingSampler
+DATASET_ROOT: /path/to/dataset
+DD3D:
+  FCOS2D:
+    INFERENCE:
+      NMS_THRESH: 0.75
+    NORM: BN
+  FCOS3D:
+    NORM: FrozenBN
+FE:
+  BACKBONE:
+    NORM: FrozenBN
+  FPN:
+    NORM: FrozenBN
+  OUT_FEATURES: ${.FPN.OUT_FEATURES}
+INPUT:
+  RESIZE:
+    MAX_SIZE_TEST: 100000
+    MAX_SIZE_TRAIN: 10000
+    MIN_SIZE_TEST: 384
+    MIN_SIZE_TRAIN:
+    - 288
+    - 304
+    - 320
+    - 336
+    - 352
+    - 368
+    - 384
+    - 400
+    - 416
+    - 448
+    - 480
+    - 512
+    - 544
+    - 576
+MODEL:
+  CKPT: /path/to/depth_pretrained_dla34-y1urdmir-20210422_165446-model_final-remapped.pth
+  WEIGHT_LABELED: 1.0
+  WEIGHT_UNLABELED: 0.5
+SOLVER:
+  BASE_LR: 0.002
+  CHECKPOINT_PERIOD: 500
+  IMS_PER_BATCH: 32
+  MAX_ITER: 3000
+  MIXED_PRECISION_ENABLED: true
+  STEPS:
+  - 21500
+  - 24000
+  WARMUP_ITERS: 1000
+TEST:
+  AUG:
+    ENABLED: false
+  EVAL_PERIOD: 500
+  IMS_PER_BATCH: 80
+WANDB:
+  TAGS:
+  - kitti-val
+  - dla34
+  - bn
+defaults:
+- /evaluators/kitti_3d@EVALUATORS.KITTI3D
+- override /meta_arch: dd3d
+- override /train_datasets@DATASETS.TRAIN: kitti_3d
+- override /test_datasets@DATASETS.TEST: kitti_3d
+- override /feature_extractors@FE: dla34_fpn

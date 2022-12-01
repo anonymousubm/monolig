@@ -1,0 +1,14 @@
+{
+    "initial_config": "random",
+    "uncertainty_calculator": {
+        "type": "dd3d.active_learning.uncertainty_calculators.loss.Loss",
+        "number_of_models": 5,
+        "loss_type": "losses_predicted"
+    },
+    "lidar_base_yaml": "base_aleatoric.yaml",
+    "dd3d_base_yaml": "base_loss.yaml",
+    "dd3d_base_prediction_yaml": "base_loss_prediction.yaml",
+    "pl_uncertainty_calculator": {
+        "type": "combined.pl_uncertainty_calculators.lidar_aleatoric_uncertainty.LidarAleatoricUncertainty"
+    }
+}
