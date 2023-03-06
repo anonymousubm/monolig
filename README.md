@@ -4,7 +4,7 @@
 
 ## Introduction
 
-This is the official implementation of MonoLiG submitted to CVPR 2023.
+This is the official implementation of MonoLiG.
 
 ## Overview
 
